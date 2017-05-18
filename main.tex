@@ -1,0 +1,348 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+%\documentclass[11pt,letterpaper,dvips]{article}
+
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{epsfig}
+%\usepackage{pgfkeys}
+\usepackage{verbatim}
+\usepackage{epsfig,wrapfig} 
+%\usepackage{tabularx}
+%\usepackage{adjustbox}
+\usepackage{enumerate}
+\usepackage{array}
+\usepackage{multicol}
+\usepackage{caption}
+\usepackage{enumitem}
+%\usepackage{blindtext}
+%\usepackage{scrextend}
+
+\usepackage{tikz}
+\usepackage{tkz-euclide}
+\usetikzlibrary{shapes.callouts}
+\usetikzlibrary{matrix}
+\usetikzlibrary{arrows,shapes,positioning,backgrounds}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{decorations.pathmorphing}
+\usetikzlibrary{calc,patterns}
+\usetikzlibrary{fadings,decorations.pathreplacing}
+\tikzstyle arrowstyle=[scale=1]
+\tikzstyle directed=[postaction={decorate,decoration={markings,
+    mark=at position .65 with {\arrow[arrowstyle]{stealth}}}}]
+\tikzstyle reverse directed=[postaction={decorate,decoration={markings,
+    mark=at position .65 with {\arrowreversed[arrowstyle]{stealth};}}}]
+\tikzstyle{spring}=[thick,decorate,decoration={zigzag,pre length=0.1cm,post length=0.1cm,segment length=6}]
+
+%see https://en.wikibooks.org/wiki/LaTeX/Page_Layout#Customizing_with_fancyhdr
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Physics 110 Laboratory}
+\rhead{Page \thepage}
+%\setlength{\headheight}{15.2pt}
+\renewcommand{\headrulewidth}{0.5pt}
+\fancyhfoffset[L]{6mm}% slightly less than 0.25in
+\fancyhfoffset[R]{6mm}%
+%\fancyhead[L]{\thepage\hskip3mm\vrule\hskip3mm\leftmark}%
+%\fancyhead[R]{\rightmark\hskip3mm\vrule\hskip3mm\thepage}%
+
+\setlength{\textwidth}{7.25in}\setlength{\textheight}{10in}
+\setlength{\parskip}{0pt}\setlength{\parindent}{0pt}
+\setlength{\topmargin}{-4.5in}
+
+\setlength{\textheight}{22.5cm}
+\setlength{\textwidth}{17.0cm}
+\setlength{\oddsidemargin}{-0.5cm} 
+\setlength{\evensidemargin}{-0.5cm}
+\setlength{\hyphenpenalty}{9500}
+
+\renewcommand{\baselinestretch}{1.02} %units?
+\newcommand{\degr}{^\circ}
+
+\renewcommand{\section}[1]{\vspace{6pt} \noindent\mbox{#1} \newline \noindent}
+\renewcommand{\subsection}[1]{\vspace{6pt} \noindent\mbox{\underline{#1}} \newline \noindent}
+\renewcommand{\subsubsection}[1]{\vspace{6pt} \noindent\mbox{\underline{#1}}\noindent}
+\renewcommand\figurename{\it Fig.}
+
+\newfont{\sansb}{cmssbx10}
+\newfont{\sans}{cmss10}
+\newfont{\tablefont}{cmsl12}
+
+%\pagestyle{empty}  %empty, plain
+
+\voffset=0pt
+\setlength{\topmargin}{0pt}\setlength{\headsep}{0pt}
+
+\special{pdf: pagesize width 8.5in height 11in}
+
+\def \courseno {110}
+\title{\Huge Physics \courseno~ Lab 4: Forces}
+\author{\Huge David DeMuth, Jr.}
+\date{\today}
+
+\newfont{\eightrm}{cmr8}
+\newfont{\boldbigtenrm}{cmbx10 scaled\magstep1}
+\newfont{\boldtenrm}{cmbx10}
+
+\begin{document}
+\newcommand{\heading}[1]{{\boldbigtenrm #1}}
+\newcommand{\subheading}[1]{{\boldtenrm #1}}
+\newcommand{\referencepages}[1]{\vskip -25pt{\eightrm REFERENCE: #1}}
+\newcommand{\materials}[1]{\vskip -15pt{\eightrm MATERIALS: #1}}
+\font \eightrm=cmr8
+\font \tenrm=cmr10
+\def \normbs {\baselineskip 11pt}
+\def \specbs {\baselineskip 14pt}
+\def \nques#1#2{\normbs \medskip \smallitem {#1)} {#2} \specbs}
+\def \nlist#1#2{\smallitem (\hskip 2pt) {#1)} \hskip 10pt {#2}\leftskip 0pt}
+\def \version{\nopagenumbers \hbox to \hsize{\vbox to 0pt{\vskip-2.5pt \hfil {{\eightrm Physics 110 Version \today}}\hfil}}}
+\thispagestyle{plain} %empty, plain
+%\pagenumbering{alph} %roman
+\baselineskip 14pt
+
+\def \headline{\hfill {NAME:\hbox to 180pt{\hrulefill}}}
+\def \footline={20161206}
+\def \setheadline#1{\footline{}\headline={\hfill {\eightrm #1 p. \folio}}}
+\vskip -10pt  \headline
+
+\parskip 8pt
+\referencepages{Astronomy: Chapter 1}
+\materials{Paper towel tube, ruler, calculator}
+
+{\bf Physics \courseno~Laboratory, Star Count}
+\vskip 0pt
+\begin{itemize}[label={}]
+  \item {\bf Materials:} One paper towel tube (or similar) about $12^{''}$ long, calculator, one clear, dark night and/or one clear night with bright moonlight.
+  \item {\bf Purposes:} To demonstrate how the total number of stars visible to the eye is estimated from samples, and to investigate how that number changes when the Moon is visibly brighter.
+\end{itemize}
+
+{\bf Background:} Counting stars one by one to determine how many occupy the naked eye sky might take a lifetime, almost like counting sand kernels on a beach. Have you ever been to a football game or a large concert and wondered how many people are in attendance, have you ever tried estimating that number? 
+
+We can get a good idea of how many stars in the sky a person could see without a telescope, using a statistical technique called sampling: where the number of stars in some known subsection of the sky are are counted, then "scaling up" to that number to the larger fraction of the visible sky to give an estimate of the total number of stars visible across the entire hemisphere of sky. %This technique relies on a statistic known as uncertainty, which can be determined in a comparison of measurements made in random directions. 
+
+In Figure \ref{fig:fig1} a sketch of the sky overhead is provided. Imagine looking out at the sky through a hollow cardboard tube. The rays of light entering the tube originate from a much larger circular spot in the sky, a spot that is a projection of the tube diameter onto a larger celestial sphere.  If moving the tube in all directions, eventually covering the entire surface of an (imaginary) hemisphere centered on your head and eyeballs, you would have an accurate count of the naked eye stars from those directions. 
+
+Like counting the individuals at a concert, covering the entire "dome of the night sky" above you on a clear night would be tedious, instead why not consider only a "few sections" of the sky relying on an expectation that no particular direction is special, that is the number of stars in any particular direction is more or less a constant, a constant we are setting out to measure.
+
+\newcommand{\boundellipse}[3]% center, xdim, ydim
+{(#1) ellipse (#2 and #3)}
+\tikzset{
+    partial ellipse/.style args={#1:#2:#3}{
+        insert path={+ (#1:#3) arc (#1:#2:#3)}
+    }
+}
+\begin{figure}[h]
+\centering
+%\label{fig:fig1}
+\begin{tikzpicture}[scale=0.8]
+  \coordinate (q) at (0,0);
+  \draw [very thin, black!05!white] (-8,-2) grid (8,5); 
+  \draw[thick, red] (0,0) [partial ellipse=0:180:4cm and 3cm];                  %canopy
+  \draw[thick, red,fill=red!10] (0,0) [partial ellipse=0:360:4cm and 1.5cm];    %base
+  \draw[thick, red, dotted] (0,0) [partial ellipse=0:57:6.8cm and 6cm];         %canopy
+  \draw[thick, red, dotted] (0,0) [partial ellipse=0:360:6.8cm and 1.9cm];      %outer base
+  \draw[thick, red, dotted] (0,0) [partial ellipse=180:123:6.8cm and 6cm];      %outer canopy
+% \draw[draw=red,latex-]  (0,0) -- (-3.2,1.8);                                  %radius L
+  \draw[draw=red,-latex]  (0,0) -- (3.45,-0.8);                                  %radius L
+  \node[right, red, rotate=0] at (1.4,-0.6) {$L$};
+%
+  \draw[thick, black, ultra thick, fill=black!10, rotate=20] (0,0) [partial ellipse=0:360:0.15cm and 0.4cm];      %center
+  \draw[thick, black, ultra thick, fill=black!10, rotate=20] (2.9,1.1) [partial ellipse=0:360:0.15cm and 0.4cm];  %middle
+  \draw[thick, red, dashed, fill=black!10, rotate=20] (5.9,2.2) [partial ellipse=0:360:0.22cm and 0.8cm];         %outer
+  \draw[draw=black, ultra thick] (-0.20,+0.31) -- (2.25,2.45);  %upper tube
+  \draw[draw=black, ultra thick] (+0.15,-0.36) -- (2.52,1.70);  %lower tube  
+  \draw[draw=blue]  (0,0) -- (2.25,2.45);  %upper short
+  \draw[draw=blue]  (0,0) -- (2.52,1.70);  %lower short
+  \draw[draw=blue]  (0,0) -- (4.54,4.86);  %upper long
+  \draw[draw=blue]  (0,0) -- (5.12,3.36);  %lower long
+  \node[right] at (-2.95,-0.20) {\eightrm Observer's Eye};
+  \node[right] at (-2.95,-0.60) {\eightrm Looking Up/Out};  
+  \node[right] at (4.55,1.68) {\eightrm Tube Diameter $D$};
+  \draw[draw=black,latex-]  (2.55,1.60) -- (3.20, 1.20) -- (4.55,1.65);  %diameter pointer arrow 
+  \node[right, rotate=40] at (-0.8,1.3) {\eightrm Tube Length};
+  \node[right, rotate=40] at (0.3,1.6) {$L$};
+  \draw[draw=black,-latex, rotate=40] (1.9,1.0) -- (3.05,1.0);     %tube length arrow high
+  \draw[draw=black,-latex, rotate=40] (1.3,1.0) -- (0.00,1.0);     %tube length arrow low
+  \node[right] at (4.25,-1.78) {\eightrm Drawing Not to Scale};
+%stars that fall in projected area
+  \draw[fill=yellow] (4.8,4) circle (0.1cm);             
+  \draw[fill=yellow] (4.7,4.38) circle (0.06cm);   
+  \node[right] at (5.20,4.20) {\eightrm Count: 2 stars};  
+%random stars
+  \draw[fill=yellow] (1.7,4.18) circle (0.06cm); 
+  \draw[fill=yellow] (1.9,4.83) circle (0.08cm); 
+  \draw[fill=yellow] (5.7,3.38) circle (0.04cm); 
+  \draw[fill=yellow] (4.7,2.80) circle (0.10cm); 
+%random stars  
+  \draw[fill=yellow] (5.1,2.18) circle (0.06cm); 
+  \draw[fill=yellow] (7.4,2.93) circle (0.02cm); 
+  \draw[fill=yellow] (6.7,2.38) circle (0.09cm); 
+  \draw[fill=yellow] (5.9,2.80) circle (0.06cm); 
+%random stars
+  \draw[fill=yellow] (-1.7,4.18) circle (0.09cm); 
+  \draw[fill=yellow] (-1.9,4.83) circle (0.03cm); 
+  \draw[fill=yellow] (-5.7,4.38) circle (0.11cm); 
+  \draw[fill=yellow] (-4.7,2.80) circle (0.12cm); 
+%random stars
+  \draw[fill=yellow] (-4.7,4.18) circle (0.07cm); 
+  \draw[fill=yellow] (-6.9,3.83) circle (0.04cm); 
+  \draw[fill=yellow] (-5.7,2.38) circle (0.01cm); 
+  \draw[fill=yellow] (-5.7,1.80) circle (0.10cm); 
+\end{tikzpicture} 
+\caption{A sketch of the night sky as seen through a small tube of length $L$ and diameter $D$.} \label{fig:fig1}
+\end{figure}
+
+The length of the tube is $L$, and its inner diameter is $D$. The area of the open end of the tube is the area of a circle of radius $R=\frac{D}{2}$, but better yet and easier to measure, the diameter $D$ is used in Equation \ref{eq:3}:
+\begin{equation}
+Area = \pi R_{tube}^2 = \pi \biggl(\frac{D_{tube}}{2}\biggr)^2 =  \pi \frac{D^2}{4} = 3.141593 \times \frac{D^2}{4} 
+\label{eq:3}
+\end{equation}
+
+\newpage
+\vphantom{testing}
+
+If you were to move the tube all around above your head, the far end would trace out the imaginary hemisphere that is show in Figure \ref{fig:fig1}. The radius of this hemisphere would be the length $L$ of the tube. The surface area of an imaginary sphere of radius $L$ is:
+\begin{equation}
+{\rm Area~of~imaginary~sphere~of~radius~L}= 4\pi L^2
+\end{equation}
+The the surface of an imaginary hemisphere of radius $L$ is half the entire surface area, thus:
+\begin{equation}
+{\rm Area~of~imaginary~hemisphere~of~radius~L}= \frac{1}{2} \times 4\pi L^2 = 2\pi L^2
+\end{equation}
+The area at the end of the tube, extended and enlarged out to the ``celestial sphere'' projects out onto the deep sky, as shown in Figure \ref{fig:fig1}. The imaginary hemisphere, extended and enlarged also projects out as the hemisphere of sky seen overhead of an observer at any given time. A proportion between these two spheres follows as:
+\begin{equation}
+ \frac{\rm Area~of~imaginary~hemisphere~of~radius~L}{\rm Area~of~end~of~tube~of~diameter~D} = \frac{\rm Area~of~hemisphere~of~projected~deep~sky}{\rm Area~of~projected~spot~on~the~deep~sky} 
+\end{equation}
+\begin{equation}
+%\frac{\rm Area~of~hemisphere~of~sky}{\rm Area~of~projected~spot} = 
+{\rm or~} \frac{2 \pi L^2}{\frac{\pi D^2}{4}}=\frac{8L^2}{D^2}  = \frac{\rm Area~of~hemisphere~of~the~deep~sky}{\rm Area~of~projected~spot~on~the~deep~sky} \label{eq:5}
+\end{equation}
+In an assumption: the stars are distributed evenly across the night sky, then the more area we sample, the more stars we would count, each time getting closer to the actual count. The expectation of a uniform distribution of stars allows for a relationship between the ratio of number of stars to the ratio of areas:
+\begin{equation}
+\frac{\rm Total~number~of~stars~in~the~larger~hemisphere~of~sky}{\rm Number~of~stars~in~projected~spot~on~deep~sky} = \frac{\rm Area~of~hemisphere}{\rm Area~of~projected~spot}=\frac{8L^2}{D^2}
+\end{equation}
+where we have used Equation \ref{eq:5}, and rewriting this slightly:
+\begin{equation}
+{\rm Total~number~of~stars~in~the~larger~hemisphere~of~sky} = ({\rm Number~of~stars~in~projected~spot}) \times \frac{8L^2}{D^2}
+\end{equation}
+As we are making multiple measurements, averaging the number of stars in the projected spot is a better measure, so
+the following formula given as Equation \ref{eq:7} will provide a decent star count estimate:
+\begin{equation} \label{eq:7}
+\boxed{{\rm Total~number~of~stars~in~hemisphere~of~sky}=({\rm average~number~of~stars~in~a~projected~spot}) \times \frac{8L^2}{D^2}}
+\end{equation}
+{\bf Procedure:}  Carefully measure $L$ and $D$ of your tube, to better than $1~mm$, averaging several measurements, for the highest accuracy. Then, calculate the factor $\frac{8L^2}{D^2}$ used in Equation \ref{eq:7}. For example, if $L=300.5~mm$ and $D=40.33~mm$, then the factor is $\frac{8\times 300.5 \times 300.5}{40.3 \times 40.3} = 445$.
+
+{\bf Observations:} On a clear night (no Moon visible), go to a relatively dark location. Allow your eyes some time to adjust to the low light levels, at least 10 minutes, preferably longer.  Then, looking through your tube, count the number of stars you can see in each of at least ten parts of the sky.
+
+\underline{Observational Hint 1:} Look at little out of the side of your eye when counting stars. This technique, call averted vision, lets the eye have a little more sensitivity to faint stars than looking directly at them would (and normally, when you gaze at the stars, your vision isn't restricted by a tube, so some starlight would enter the sides of your eyes).
+
+\vfill
+\eightrm Reference: Out of the Classroom, Observations \& Investigations in Astronomy, D. W. Dawson, 2002, ISBN: 0-534-38015-8.
+\newpage
+\vphantom{testing}
+
+\underline{Observational Hint 2:}  Try to cover a lot of different directions and altitudes, from looking straight up (zenith direction) to looking near the horizon and toward elevations in-between; this will give you a more realistic estimate of the star numbers. Carefully record the direction (such as NW) and altitude (say, $45^\circ$ for each observation; an overhead observation should simply be called "zenith."
+
+Suppose you counted stars in ten different areas; lets call the numbers of stars seen in each case $N_1, N_2, N_3,,, N_10$. Then the average number of stars is 
+\begin{equation} \label{eq:9}
+N_{ave} = \frac{N_1 + N_2 + ... + N_{10}}{10} = {\rm (average)~number~of~stars~in~a~projected~spot.}
+\end{equation}
+The number provided in Equation \ref{eq:9} is used in the formula given as Equation \ref{eq:7}.
+
+Calculate a scatter (uncertainty) in your average number; the best choice is $\sigma$, the standard deviation. The average number of stars seen through the tube, then, can be expressed as a number with an uncertainty: $N_{avg} \pm \sigma$.
+
+When the average number is multiplied by the factor $\frac{8L^2}{D^2}$ in Equation \ref{eq:7}, to obtain the total number of stars that should be visible to the naked eye at any one time, the uncertainty in the total number is just $\sigma$ multiplied by the same factor, $\frac{8L^2}{D^2}$. For example, if $N_{ave}=25 \pm 4$ and $\frac{8L^2}{D^2}=445$, then the total number of stars is estimated at $25 (455) \pm 4 (445)$, or $11,000 \pm 1,800$ stars.
+
+Calculate $N_{ave}$, $\sigma$, the estimate of the TOTAL number of stars visible and its uncertainty, for the observations you made on the clear, dark night. 
+
+{\bf For multi-night observations:}  To do this exercise as a multi-night project, repeat your observations (and calculations) on a clear night when the Moon is visible and bright. Again, take samples from all around the sky, but take care not to look right near the Moon.
+
+{\bf Question 1:} If you did this as a multi-night exercise, how does the total number of stars, and its uncertainty, for the dark (moonless) night compare to those values for the moonlit night?
+
+\vskip 50pt
+
+{\bf Question 2:} Can you think of any other reasons that could be responsible for making those numbers change from night to night?
+
+\vskip 50pt
+
+{\bf Question 3:} Ideally you would experiment with two or three different tube lengths or diameters. How do you think your results would be affected if you used a tube of different dimensions to take your data samples?
+
+
+\newpage
+
+\vphantom{fakeskip}
+
+{\bf Sample Lab Report}
+
+{\bf Estimating the Number of Stars Visible to the Naked Eye}\\
+Cecilia G. Smith\\
+September 23, 2013
+
+{\bf Equipment and Observations:} The purpose of this exercise were (1) to estimate the number of stars visible to the eye by taking samples around the sky, and (2) to investigate how the presence of the Moon in the sky would affect this number.
+
+I looked through a paper-towel tube whose diameter and length I measured with a millimeter ruler. I observed on two different evenings from the University campus, in the student parking lot which did not have much bright lighting nearby. Observations on both nights started around 8:00 p.m. The dates were September 8, a clear night with no Moon; and September 20, also a clear night with a nearly full Moon. On each night, I chose ten different sky directions to measure: some high, some near the horizon but non right next to the Full Moon on the second night. From my numbers, I calculated an average value for each night and also a standard deviation. Then the total number of stars in a hemisphere of the sky on each night was computed from
+
+$$N=\frac{8L^2}{D^2} \times {\rm average~number~of~stars}$$
+and the uncertainty in that number is
+$$Uncertainty = \frac{8L^2}{D^2} \times \sigma$$
+where $\sigma$ is the standard deviation on the mean. 
+
+As controls in this experiment, I used the same paper-towel tube each night, observed on nights when the sky seemed to be clear, observed in ten different directions each time, and observed from the same location at about the same time each night. An independent variable in the experiment was the Moon's phase. A dependent variable was the number of stars seen on each night, which depended on the Moon's phase and could also depend on where I was aiming the paper towel tube.
+
+{\bf Data and Results:} I measured the dimensions of the paper-towel tube as $L=298.1~mm$ and $D=43.9~mm$ (averages of several measurements), so that $\frac{8L^2}{D^2}=369$. The table below shows the numbers of stars counted in each of the the ten areas I chose, on the two different nights. A summary data can be found in Table \ref{tab:summary} with observational data listed as Table \ref{tab:observational}
+
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}  %define column width
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\renewcommand{\arraystretch}{1.2}  %increase row height
+\begin{table}[h]
+\centering
+\begin{tabular}{|R{3.5cm} | L{3.5cm}|R{3.5cm} | L{3.5cm}|} \hline
+\multicolumn{2}{|c|}{September 8} & \multicolumn{2}{c|}{September 20} \\ \hline 
+ Ave = & 10.1 & Ave = & 3.7 \\ \hline
+Std = & $\pm 2.6$ & Std = & $\pm = 2.4$ \\ \hline
+$N =$ & $369 \times 10.1 = 3730~stars$ & $N=$ & $369 \times 3.7 = 1370~stars$ \\ \hline
+$Uncertainty=$ & $\pm 959 ~stars$ & $Uncertainty=$ & $\pm 886 ~stars$  \\ \hline
+\end{tabular}
+\label{tab:summary}
+\captionsetup{width=.8\linewidth}  %usepackage caption
+\caption{Observational Data Summary}
+\end{table}
+{\bf Conclusions:} In this experiment, I learned how a very large number of stars can be estimated by taking samples. I learned that on a dark moonless night a person might be able to see several thousand stars at any time. The Moon, however, really drops the total number of visible stars (from 3730 to 1370) by lighting up the sky and making stars harder to see.
+
+If I were to do this experiment over, I would take more samples of the sky, in various directions and at different elevations, to get a more accurate average number of stars. I would also see how the total number of stars depends on the Moon's phase at other phases besides Full. The paper towel tube had kind of  a narrow view' the experiment could be repeated with a bigger tube, which would also let me count more stars.
+
+\vphantom{fakeskip}
+
+\renewcommand{\arraystretch}{1.2}  %increase row height
+\begin{table}[h]
+\centering
+\begin{tabular}{|C{1.5cm}|C{1.5cm}|C{1.5cm}|C{1.5cm}|C{1.5cm}|C{1.5cm}|C{1.5cm}|C{1.5cm}|}
+\hline
+\multicolumn{4}{|c|}{September 8} & \multicolumn{4}{c|}{September 20} \\ \hline 
+Trial & Count & RA & Alt & Trial & Count & RA & Alt \\ \hline
+ 1 & 10 & N  & 90 &  1 & 1  &  N & 90  \\ \hline
+ 2 & 12 & NW & 60 &  2 & 4  & NW & 60  \\ \hline
+ 3 & 15 & W  & 60 &  3 & 3  &  W & 60  \\ \hline
+ 4 &  6 & SW & 60 &  4 & 1  & SW & 60  \\ \hline
+ 5 &  8 & S  & 60 &  5 & 5  & S  & 60  \\ \hline
+ 6 & 11 & SE & 45 &  6 & 0  & SE & 45  \\ \hline
+ 7 &  9 & E  & 45 &  7 & 4  & E  & 45  \\ \hline
+ 8 & 10 & NE & 45 &  8 & 6  & NE & 45  \\ \hline
+ 9 & 13 & N  & 45 &  9 & 5  & N  & 45  \\ \hline
+10 &  7 & NW & 45 & 10 & 8  & NW & 45  \\ \hline
+\end{tabular}
+\label{tab:observational}
+\captionsetup{width=.8\linewidth}  %usepackage caption
+\caption{Observational Data}
+\end{table}
+
+\vfill 
+\centerline{\eightrm david.demuth@vcsu.edu v20161212}
+\end{document}
+ 
+%david.demuth@vcsu.edu, demuth@umn.edu, dmdemuth@gmail.com
